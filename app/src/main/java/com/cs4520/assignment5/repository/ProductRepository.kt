@@ -22,7 +22,7 @@ class ProductRepository(private val apiService: ApiService, private val productD
                         Result.Success(products)
                     } ?: Result.Empty
                 } else {
-                    Result.Error(Exception("Try to log in again! API Error: ${response.message()}"))
+                    Result.Error(Exception("${response.message()} (API Error) Try to log in again!"))
                 }
             } catch (e: Exception) {
                 Result.Error(e)

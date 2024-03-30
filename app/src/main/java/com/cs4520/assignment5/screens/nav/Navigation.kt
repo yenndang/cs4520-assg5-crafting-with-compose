@@ -17,7 +17,7 @@ fun SetupNavHost(navController: NavHostController) {
             LoginScreen(navController)
         }
         composable(Screen.ProductList.route) {
-            ProductListScreen(navController)
+            ProductListScreen()
         }
         // ... add other composable screens here
     }
