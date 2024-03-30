@@ -45,7 +45,14 @@ class ProductListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeProducts()
-        viewModel.fetchProducts()
+        viewModel.fetchProducts() // fetches when view is created
+    }
+
+    // Update based on TA's feedback
+    override fun onResume() { //to initiate an API fetch in the onResume lifecycle callback of an activity or fragment
+        super.onResume()
+        viewModel.fetchProducts() // fetches when fragment resumes
+
     }
 
     private fun setupRecyclerView() {
@@ -95,7 +102,7 @@ class ProductListFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     if (productAdapter.itemCount == 0) {
                         binding.textViewEmpty.visibility = View.VISIBLE
-                        binding.textViewEmpty.text = "No products available. Try scrolling down again for more content."
+                        binding.textViewEmpty.text = getString(R.string.scroll_again)
                         binding.recyclerView.visibility = View.GONE
                     } else {
                         Toast.makeText(context, "No products available. Try scrolling down again for more content.", Toast.LENGTH_SHORT).show()

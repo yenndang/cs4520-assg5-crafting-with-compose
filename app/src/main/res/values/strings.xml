@@ -7,4 +7,5 @@
   <string name="the_app_title">The App Title</string>
   <string name="price">Price</string>
   <string name="no_products_available">No products available!</string>
+    <string name="scroll_again">No products available. Try scrolling down again for more content.</string>
 </resources>
