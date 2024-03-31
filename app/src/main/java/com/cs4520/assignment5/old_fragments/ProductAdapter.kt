@@ -1,10 +1,11 @@
-package com.cs4520.assignment5
+package com.cs4520.assignment5.old_fragments
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cs4520.assignment5.R
 import com.cs4520.assignment5.databinding.ItemProductBinding
 import com.cs4520.assignment5.models.Product
 

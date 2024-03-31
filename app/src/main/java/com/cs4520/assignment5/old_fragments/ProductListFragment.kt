@@ -1,4 +1,4 @@
-package com.cs4520.assignment5
+package com.cs4520.assignment5.old_fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cs4520.assignment5.R
 import com.cs4520.assignment5.api.AppDatabaseSingleton
 import com.cs4520.assignment5.databinding.FragmentProductListBinding
 import com.cs4520.assignment5.repository.ProductRepository
