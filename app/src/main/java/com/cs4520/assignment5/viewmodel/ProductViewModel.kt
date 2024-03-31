@@ -1,7 +1,6 @@
 package com.cs4520.assignment5.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,8 +30,6 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
                 is Result.Success -> {
                     val currentProducts = (productList.value as? Result.Success)?.data ?: emptyList()
                     productList.postValue(Result.Success(currentProducts + result.data))
-                    Log.d("ProductViewModel", "Current products size: ${currentProducts.size}")
-                    Log.d("ProductViewModel", "New products size: ${result.data.size}")
                     currentPage++
                 }
                 is Result.Error -> {

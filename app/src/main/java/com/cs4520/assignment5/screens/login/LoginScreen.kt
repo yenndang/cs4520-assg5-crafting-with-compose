@@ -89,9 +89,6 @@ fun LoginScreen(navController: NavHostController) {
                     // Set the login state to Error if the user validation fails
                     LoginState.Error
                 }
-                // Clear the username and password fields
-                username = ""
-                password = ""
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,7 +99,6 @@ fun LoginScreen(navController: NavHostController) {
         }
     }
 }
-
 
 // A function to validate user credentials
 fun validUser(username: String, password: String): Boolean {

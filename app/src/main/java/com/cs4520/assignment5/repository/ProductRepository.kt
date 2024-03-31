@@ -1,7 +1,6 @@
 package com.cs4520.assignment5.repository
 
 import android.content.Context
-import android.util.Log
 import com.cs4520.assignment5.api.ApiService
 import com.cs4520.assignment5.models.Product
 import com.cs4520.assignment5.models.ProductEntity
@@ -19,7 +18,6 @@ class ProductRepository(private val apiService: ApiService, private val productD
                 if (response.isSuccessful) {
                     response.body()?.let { products ->
                         val productEntities = products.map { it.toEntity() }
-                        Log.d("ProductRepository", "Number of products fetched: ${products.size}")
                         productDao.insertProducts(productEntities)
                         Result.Success(products)
                     } ?: Result.Empty

@@ -65,7 +65,7 @@ fun ProductListScreen(
 fun ProductList(products: List<Product>) {
     LazyColumn(
         contentPadding = PaddingValues(all = 0.dp),  // Adjust or remove padding as needed
-        verticalArrangement = Arrangement.spacedBy(10.dp)  // Adjust space between items
+        verticalArrangement = Arrangement.spacedBy(0.dp)  // Adjust space between items
     ) {
         items(products) { product ->
             ProductListItem(product = product)
@@ -83,7 +83,7 @@ fun ProductListItem(product: Product) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 0.dp),
+            .padding(vertical = 0.dp),
         elevation = 2.dp,
         backgroundColor = backgroundColor
     ) {
