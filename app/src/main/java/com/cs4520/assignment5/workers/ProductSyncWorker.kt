@@ -18,9 +18,8 @@ class ProductSyncWorker(
         val database = AppDatabaseSingleton.getDatabase(applicationContext)
         val repository = ProductRepository(RetrofitInstance.api, database.productDao(), applicationContext)
 
-        try {
+        return@coroutineScope try {
             Log.d("ProductSyncWorker", "Fetching products")
-            // Fetch and store the products. Modify this to fetch based on pagination or other logic.
             repository.getProducts(null)
             Log.d("ProductSyncWorker", "Products fetched and stored successfully")
             Result.success()
@@ -30,3 +29,4 @@ class ProductSyncWorker(
         }
     }
 }
+

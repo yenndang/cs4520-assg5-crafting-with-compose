@@ -1,5 +1,6 @@
 package com.cs4520.assignment5.screens.productlist
 
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,28 +29,37 @@ import com.cs4520.assignment5.viewmodel.ProductViewModelFactory
 
 
 @Composable
-fun ProductListScreen(
-    viewModel: ProductViewModel = viewModel(
-        factory = ProductViewModelFactory(
-            ProductRepository(
-                RetrofitInstance.api,
-                AppDatabaseSingleton.getDatabase(LocalContext.current).productDao(),
-                LocalContext.current
-            )
-        )
-    )) {
+fun ProductListScreen() {
+    // Obtain the application context
+    val context = LocalContext.current.applicationContext as Application
+
+    // Create the ProductRepository instance
+    val productRepository = ProductRepository(
+        apiService = RetrofitInstance.api,
+        productDao = AppDatabaseSingleton.getDatabase(context).productDao(),
+        context = context
+    )
+
+    // Instantiate the ViewModel
+    val viewModel: ProductViewModel = viewModel(
+        factory = ProductViewModelFactory(context, productRepository)
+    )
+
+    // Now you can use your viewModel to fetch products and observe changes
     val productListState = viewModel.productList.observeAsState()
 
     LaunchedEffect(Unit) {
+        viewModel.setupPeriodicWork()
         viewModel.fetchProducts()
     }
 
+    // Composable functions to display the product list, loading state, etc.
     when (val result = productListState.value) {
         is Result.Success -> {
             if (result.data.isNotEmpty()) {
                 ProductList(products = result.data)
             } else {
-                EmptyView()  // Show empty view if data is empty
+                EmptyView()
             }
         }
         is Result.Error -> ErrorView(exception = result.exception)
@@ -57,7 +67,6 @@ fun ProductListScreen(
         null -> LoadingView()
     }
 }
-
 
 @Composable
 fun ProductList(products: List<Product>) {

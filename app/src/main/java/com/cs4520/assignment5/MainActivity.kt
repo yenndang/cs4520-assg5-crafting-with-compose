@@ -21,19 +21,6 @@ import java.util.concurrent.TimeUnit
 //
 ////fragment container view go inside the activity file.
 
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstantState: Bundle?) {
-//        super.onCreate(savedInstantState)
-//        setContent {
-//            MaterialTheme {
-//                val navController = rememberNavController()
-//                SetupNavHost(navController = navController)
-//            }
-//        }
-//
-//    }
-//}
-
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstantState: Bundle?) {
         super.onCreate(savedInstantState)
@@ -44,43 +31,56 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        setupPeriodicWork()
-    }
-
-    private fun setupPeriodicWork() {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-
-        val periodicWorkRequest =
-            PeriodicWorkRequestBuilder<ProductSyncWorker>(1, TimeUnit.HOURS)
-                .setInitialDelay(1, TimeUnit.HOURS)
-                .setConstraints(constraints)
-                .build()
-//        // for testing
-//        val periodicWorkRequest =
-//            PeriodicWorkRequestBuilder<ProductSyncWorker>(15, TimeUnit.MINUTES) // or 1, TimeUnit.MINUTES
-//                .setConstraints(constraints)
-//                .build()
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-            "product_sync_work",
-            ExistingPeriodicWorkPolicy.KEEP,
-            periodicWorkRequest
-        )
-
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(periodicWorkRequest.id)
-            .observe(this) { workInfo ->
-                when (workInfo.state) {
-                    WorkInfo.State.ENQUEUED -> Log.d("MainActivity", "Work ENQUEUED")
-                    WorkInfo.State.RUNNING -> Log.d("MainActivity", "Work RUNNING")
-                    WorkInfo.State.SUCCEEDED -> Log.d("MainActivity", "Work SUCCEEDED")
-                    WorkInfo.State.FAILED -> Log.d("MainActivity", "Work FAILED")
-                    WorkInfo.State.BLOCKED -> Log.d("MainActivity", "Work BLOCKED")
-                    WorkInfo.State.CANCELLED -> Log.d("MainActivity", "Work CANCELLED")
-                    else -> Log.d("MainActivity", "Work state: ${workInfo.state}")
-                }
-            }
-
     }
 }
+
+//class MainActivity : ComponentActivity() {
+//    override fun onCreate(savedInstantState: Bundle?) {
+//        super.onCreate(savedInstantState)
+//        setContent {
+//            MaterialTheme {
+//                val navController = rememberNavController()
+//                SetupNavHost(navController = navController)
+//            }
+//        }
+//
+//        setupPeriodicWork()
+//    }
+//
+//    private fun setupPeriodicWork() {
+//        val constraints = Constraints.Builder()
+//            .setRequiredNetworkType(NetworkType.CONNECTED)
+//            .build()
+//
+//        val periodicWorkRequest =
+//            PeriodicWorkRequestBuilder<ProductSyncWorker>(1, TimeUnit.HOURS)
+//                .setInitialDelay(1, TimeUnit.HOURS)
+//                .setConstraints(constraints)
+//                .build()
+////        // for testing
+////        val periodicWorkRequest =
+////            PeriodicWorkRequestBuilder<ProductSyncWorker>(15, TimeUnit.MINUTES) // or 1, TimeUnit.MINUTES
+////                .setConstraints(constraints)
+////                .build()
+//
+//        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+//            "product_sync_work",
+//            ExistingPeriodicWorkPolicy.KEEP,
+//            periodicWorkRequest
+//        )
+//
+//        WorkManager.getInstance(this).getWorkInfoByIdLiveData(periodicWorkRequest.id)
+//            .observe(this) { workInfo ->
+//                when (workInfo.state) {
+//                    WorkInfo.State.ENQUEUED -> Log.d("MainActivity", "Work ENQUEUED")
+//                    WorkInfo.State.RUNNING -> Log.d("MainActivity", "Work RUNNING")
+//                    WorkInfo.State.SUCCEEDED -> Log.d("MainActivity", "Work SUCCEEDED")
+//                    WorkInfo.State.FAILED -> Log.d("MainActivity", "Work FAILED")
+//                    WorkInfo.State.BLOCKED -> Log.d("MainActivity", "Work BLOCKED")
+//                    WorkInfo.State.CANCELLED -> Log.d("MainActivity", "Work CANCELLED")
+//                    else -> Log.d("MainActivity", "Work state: ${workInfo.state}")
+//                }
+//            }
+//
+//    }
+//}
