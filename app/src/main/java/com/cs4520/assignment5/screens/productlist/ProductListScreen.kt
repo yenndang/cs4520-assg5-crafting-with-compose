@@ -39,9 +39,11 @@ fun ProductListScreen(
         )
     )) {
     val productListState = viewModel.productList.observeAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.fetchProducts()
+        viewModel.scheduleProductFetchWorker(context)
     }
 
     when (val result = productListState.value) {

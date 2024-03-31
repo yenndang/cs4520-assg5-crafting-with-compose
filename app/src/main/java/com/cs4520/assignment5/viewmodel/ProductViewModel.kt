@@ -1,13 +1,21 @@
 package com.cs4520.assignment5.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import kotlinx.coroutines.launch
 import com.cs4520.assignment5.models.Product
 import com.cs4520.assignment5.repository.ProductRepository
 import com.cs4520.assignment5.utils.Result
+import com.cs4520.assignment5.workers.FetchProductsWorker
+import java.util.concurrent.TimeUnit
 
 class ProductViewModel(private val repository: ProductRepository) : ViewModel() {
     val productList = MutableLiveData<Result<List<Product>>>()
@@ -41,4 +49,18 @@ class ProductViewModel(private val repository: ProductRepository) : ViewModel() 
     fun loadMoreProducts() {
         fetchProducts()
     }
+
+
+    fun scheduleProductFetchWorker(context: Context) {
+        val workRequest = PeriodicWorkRequestBuilder<FetchProductsWorker>(1, TimeUnit.HOURS)
+            // Additional configuration...
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "fetchProducts",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            workRequest
+        )
+    }
+
 }
